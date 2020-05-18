@@ -23,7 +23,7 @@ namespace AdventureBoiSE
             this.MonsterAlive = MonsterAlive;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamageM(int damage)
         {
             this.Health -= damage;
             if (this.Health <= 0)

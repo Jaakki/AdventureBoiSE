@@ -13,6 +13,15 @@ namespace AdventureBoiSE
         public int PlayerChanceHit { get; set; }
         public bool PlayerAlive { get; set; }
 
+        public void TakeDamageP(int damage)
+        {
+            this.PlayerHealth -= damage;
+            if (this.PlayerHealth <= 0)
+            {
+                PlayerAlive = false;
+            }
+        }
+
         //public Player(string name, int EXP, int DMG)
         //{
         //    this.PlayerName = name;

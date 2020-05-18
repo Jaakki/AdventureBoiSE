@@ -83,18 +83,20 @@ namespace AdventureBoiSE
             int hit = Dice.RandomDice();
             if (hit >= yourHitChance)
             {
+                Console.WriteLine("Hit!");
                 return true;
             }
             else
             {
+                Console.WriteLine("Miss!");
                 return false;
             }
         }
 
-        public void TakeDamage(int health, int damage)
-        {
-            health -= damage;
-        }
+        //public void TakeDamage(int health, int damage)
+        //{
+        //    health -= damage;
+        //}
 
         public bool MainMenu()
         {
@@ -140,7 +142,6 @@ namespace AdventureBoiSE
         public void GameplayLoop(Player player)
         {
             bool FightContinues = false;
-            bool monsterAlive;
             do
             {
                 Console.Clear();
@@ -157,18 +158,20 @@ namespace AdventureBoiSE
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        CheckIfHit(player.PlayerChanceHit, currentScene.monsters[0].Health, player.PlayerDamage);
+                        bool isHit = CheckIfHit(player.PlayerChanceHit);
+                        if (isHit)
+                        {
+                            currentScene.monsters[0].TakeDamageM(player.PlayerDamage);
+                        }
                         break;
                     default:
                         break;
                 }
 
-                monsterAlive = CheckIfAlive(currentScene.monsters[0].Health);
-                Console.WriteLine($"monster Alive check:{monsterAlive}");
-                monsterAlive = false;
-                Console.WriteLine($"monster Alive check:{monsterAlive}");
+                currentScene.monsters[0].MonsterAlive = CheckIfAlive(currentScene.monsters[0].Health);
+                Console.WriteLine($"monster Alive check:{currentScene.monsters[0].MonsterAlive}");
 
-                if (monsterAlive == false)
+                if (currentScene.monsters[0].MonsterAlive == false)
                 {
                     player.PlayerExperience += currentScene.monsters[0].EXP;
                     FightContinues = false;
@@ -177,7 +180,11 @@ namespace AdventureBoiSE
                 else
                 {
                     FightContinues = true;
-                    CheckIfHit(currentScene.monsters[0].HitCha, player.PlayerHealth, currentScene.monsters[0].Damage);
+                    bool isHit = CheckIfHit(currentScene.monsters[0].HitCha);
+                    if (isHit)
+                    {
+                        player.TakeDamageP(currentScene.monsters[0].Damage);
+                    }
                 }
 
                 if (player.PlayerHealth <= 0)
@@ -188,6 +195,7 @@ namespace AdventureBoiSE
             } while (player.PlayerAlive);
 
             currentScene = scenes[3];
+            Console.ReadKey();
 
         }
     }
