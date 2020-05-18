@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml.Schema;
@@ -9,6 +10,7 @@ namespace AdventureBoiSE
 {
     public class GameManager    //ShowSceneDescription(Scene scene), GetRandomMonster(), DisplayScene(), GetPlayerSelection(), HandleSelection()
     {
+        public List<Player> previousRuns = new List<Player>();
         public List<Scene> scenes = new List<Scene>();
         //public bool FightContinues = false;
         public static Scene currentScene;
@@ -65,6 +67,11 @@ namespace AdventureBoiSE
             #endregion
 
             #region Monsters
+            if ((encounter1.monsters.Count + encounter2.monsters.Count) > 0)
+            {
+                Console.WriteLine("Tule tänne!");
+                currentScene.monsters.Clear();
+            }
             Monster goblin = new Monster("Goblin", 1, 1, 4, 1, true);
             Monster orc = new Monster("Orc",2, 2, 3, 2, true);
             encounter1.monsters.Add(goblin);
@@ -108,12 +115,25 @@ namespace AdventureBoiSE
             {
                 case "1":
                     BeginGame();
-                    return false;
+                    return true;
+                case "2":
+                    ShowScore();
+                    return true;
                 case "3":
                     return false;
                 default:
                     return true;
             }
+        }
+
+        public void ShowScore()
+        {
+            Console.Clear();
+            foreach (Player player in previousRuns)
+            {
+                Console.WriteLine($"Name: {player.PlayerName} - Experience: {player.PlayerExperience}");
+            }
+            Console.ReadLine();
         }
 
         public bool CheckIfAlive(int health)
@@ -142,6 +162,8 @@ namespace AdventureBoiSE
         public void GameplayLoop(Player player)
         {
             bool FightContinues = false;
+            Monster monster = new Monster();
+            
             do
             {
                 Console.Clear();
@@ -149,41 +171,55 @@ namespace AdventureBoiSE
                 if (FightContinues == false)
                 {
                     currentScene = GetRandomScene();
+                    monster = currentScene.monsters[0];
+                    #region HYI!
+                    if (monster.Name == "Goblin")
+                    {
+                        monster.Health = 1;
+                        monster.MonsterAlive = true;
+                    }
+                    if (monster.Name == "Orc")
+                    {
+                        monster.Health = 2;
+                        monster.MonsterAlive = true;
+                    }
+                    #endregion
                 }
                 #endregion
-
                 ShowScene(currentScene);
 
                 Console.WriteLine("1) Hit enemy");
+                Console.WriteLine("2) Run to Main Menu");
                 switch (Console.ReadLine())
                 {
                     case "1":
                         bool isHit = CheckIfHit(player.PlayerChanceHit);
                         if (isHit)
                         {
-                            currentScene.monsters[0].TakeDamageM(player.PlayerDamage);
+                            monster.TakeDamageM(player.PlayerDamage);
                         }
                         break;
+                    case "2":
+                        return;
                     default:
                         break;
                 }
 
-                currentScene.monsters[0].MonsterAlive = CheckIfAlive(currentScene.monsters[0].Health);
-                Console.WriteLine($"monster Alive check:{currentScene.monsters[0].MonsterAlive}");
+                monster.MonsterAlive = CheckIfAlive(monster.Health);
 
-                if (currentScene.monsters[0].MonsterAlive == false)
+                if (monster.MonsterAlive == false)
                 {
-                    player.PlayerExperience += currentScene.monsters[0].EXP;
+                    player.PlayerExperience += monster.EXP;
                     FightContinues = false;
-                    Console.WriteLine("monsu kuoli");
+                    Console.WriteLine($"{monster.Name} dies");
                 }
                 else
                 {
                     FightContinues = true;
-                    bool isHit = CheckIfHit(currentScene.monsters[0].HitCha);
+                    bool isHit = CheckIfHit(monster.HitCha);
                     if (isHit)
                     {
-                        player.TakeDamageP(currentScene.monsters[0].Damage);
+                        player.TakeDamageP(monster.Damage);
                     }
                 }
 
@@ -193,10 +229,10 @@ namespace AdventureBoiSE
                 }
                 Console.ReadKey();
             } while (player.PlayerAlive);
-
+            previousRuns.Add(player);
             currentScene = scenes[3];
+            ShowScene(currentScene);
             Console.ReadKey();
-
         }
     }
 }

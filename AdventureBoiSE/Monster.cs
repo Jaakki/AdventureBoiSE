@@ -23,6 +23,11 @@ namespace AdventureBoiSE
             this.MonsterAlive = MonsterAlive;
         }
 
+        public Monster()
+        {
+
+        }
+
         public void TakeDamageM(int damage)
         {
             this.Health -= damage;
