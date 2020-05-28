@@ -20,6 +20,18 @@ namespace AdventureBoiSE
             Console.WriteLine(scene.SceneDescription);
         }
 
+        public void DisplayPlayerData(int health, int exp)
+        {
+            Console.SetCursorPosition(40,20);
+            Console.Write($"\tExperience: {exp}");
+            Console.Write("\tHealth: ");
+            for (int i = 0; i < health; i++)
+            {
+                Console.Write($"♥");
+            }
+            Console.SetCursorPosition(0,0);
+        }
+
         public Player GeneratePlayer()
         {
             Console.Clear();
@@ -83,6 +95,20 @@ namespace AdventureBoiSE
         {
             int x = Dice.RandomInt(1,3);
             return scenes[x];
+        }
+
+        public int Heal(int health)
+        {
+            if (health < 5)
+            {
+                Console.WriteLine("Heal +1");
+                return (health + 1);
+            }
+            else
+            {
+                Console.WriteLine("I'm too full");
+                return (health + 0);
+            }
         }
 
         public bool CheckIfHit(int yourHitChance)
@@ -167,6 +193,7 @@ namespace AdventureBoiSE
             do
             {
                 Console.Clear();
+                DisplayPlayerData(player.PlayerHealth, player.PlayerExperience);
                 #region Generate new Encounter
                 if (FightContinues == false)
                 {
@@ -189,7 +216,8 @@ namespace AdventureBoiSE
                 ShowScene(currentScene);
 
                 Console.WriteLine("1) Hit enemy");
-                Console.WriteLine("2) Run to Main Menu");
+                Console.WriteLine("2) Eat some meat");
+                Console.WriteLine("3) Flee to Main Menu");
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -200,6 +228,9 @@ namespace AdventureBoiSE
                         }
                         break;
                     case "2":
+                        player.PlayerHealth = Heal(player.PlayerHealth);
+                        break;
+                    case "3":
                         return;
                     default:
                         break;
