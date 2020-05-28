@@ -155,9 +155,16 @@ namespace AdventureBoiSE
         public void ShowScore()
         {
             Console.Clear();
-            foreach (Player player in previousRuns)
+            if (previousRuns.Count == 0)
             {
-                Console.WriteLine($"Name: {player.PlayerName} - Experience: {player.PlayerExperience}");
+                Console.WriteLine("You have no recorded runs.");
+            }
+            else
+            {
+                foreach (Player player in previousRuns)
+                {
+                    Console.WriteLine($"Name: {player.PlayerName} - Experience: {player.PlayerExperience}");
+                }
             }
             Console.ReadLine();
         }
@@ -221,6 +228,7 @@ namespace AdventureBoiSE
                 switch (Console.ReadLine())
                 {
                     case "1":
+                        Console.Write("Player: ");
                         bool isHit = CheckIfHit(player.PlayerChanceHit);
                         if (isHit)
                         {
@@ -247,6 +255,7 @@ namespace AdventureBoiSE
                 else
                 {
                     FightContinues = true;
+                    Console.Write("Enemy: ");
                     bool isHit = CheckIfHit(monster.HitCha);
                     if (isHit)
                     {
