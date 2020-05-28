@@ -17,6 +17,7 @@ namespace AdventureBoiSE
         //mainMenu()
         public void ShowScene(Scene scene)      //me näytetään tämä scene
         {
+            //Console.WriteLine(scene.SceneArt);
             Console.WriteLine(scene.SceneDescription);
         }
 
@@ -57,18 +58,22 @@ namespace AdventureBoiSE
             Scene storyScene = new Scene();
             storyScene.SceneID = 0;
             storyScene.SceneDescription = "You are traveling in the woods, but then you trip on a branch.\nYou bumble your way into a camp of orcs and goblins.\nYou must fight!";
+            //storyScene.SceneArt = "";
 
             Scene encounter1 = new Scene();
             encounter1.SceneID = 1;
             encounter1.SceneDescription = "Nasty little goblin comes at you with a knife!";
+            //encounter1.SceneArt = "";
 
             Scene encounter2 = new Scene();
             encounter2.SceneID = 2;
             encounter2.SceneDescription = "Mighty orc charges at you!";
+            //encounter2.SceneArt = "";
 
             Scene youDied = new Scene();
             youDied.SceneID = 3;
             youDied.SceneDescription = "You have died!";
+            //youDied.SceneArt = "";
 
             scenes.Add(storyScene);
             scenes.Add(encounter1);

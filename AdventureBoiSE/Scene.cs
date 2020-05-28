@@ -9,6 +9,6 @@ namespace AdventureBoiSE
         public List<Monster> monsters = new List<Monster>();
         public string SceneDescription;
         public int SceneID;
-        //public string SceneArt;
+        public string SceneArt;
     }
 }
