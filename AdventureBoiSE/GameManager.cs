@@ -194,6 +194,7 @@ namespace AdventureBoiSE
         public bool MainMenu()
         {
             Console.Clear();
+            Col2();
             Console.WriteLine("1) Start game");
             Console.WriteLine("2) Score scene");
             Console.WriteLine("3) Quit game");
