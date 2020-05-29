@@ -14,11 +14,24 @@ namespace AdventureBoiSE
         public List<Scene> scenes = new List<Scene>();
         //public bool FightContinues = false;
         public static Scene currentScene;
-        //mainMenu()
+        public void Col1()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+        }
+        public void Col2()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        public void Col3()
+        {
+
+        }
         public void ShowScene(Scene scene)      //me näytetään tämä scene
         {
-            //Console.WriteLine(scene.SceneArt);
+            Col1();
+            Console.WriteLine(scene.SceneArt);
             Console.WriteLine(scene.SceneDescription);
+            Col2();
         }
 
         public void DisplayPlayerData(int health, int exp)
@@ -58,22 +71,64 @@ namespace AdventureBoiSE
             Scene storyScene = new Scene();
             storyScene.SceneID = 0;
             storyScene.SceneDescription = "You are traveling in the woods, but then you trip on a branch.\nYou bumble your way into a camp of orcs and goblins.\nYou must fight!";
-            //storyScene.SceneArt = "";
+            storyScene.SceneArt = @"              .@@@@&             ,@.    
+             *@@@@@@@,         /@@/    
+             *@@@  @@,      /@@@/       
+             *@@@  @@, *@@@@@@/          
+   *@@@@@@@_(@@@@@@@@@@@&            
+   *@@@@@@@@@@@@@@@&                    
+   *@@@@@@@  *@@@@@&                    
+    .@@@@&   *@@@@@@@@/                 
+             *@@,    %@@&               
+            (@&       (@&               
+           %@#       %@#                
+         .@@/        %@@@@,             
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
 
             Scene encounter1 = new Scene();
             encounter1.SceneID = 1;
             encounter1.SceneDescription = "Nasty little goblin comes at you with a knife!";
-            //encounter1.SceneArt = "";
+            encounter1.SceneArt = @$"   @@@@@@@@%             (@@@@@@@@@@@  
+          ///(@@@@&##&@@@#///.          
+\@@.            \ * * /      .          
+  \@@#         ,%\_U_\\                 
+     \@&/@(//        /\\                
+      \@@&  ,%_#|  |/  \\               
+        `````  /|  |\                   
+              /#    \\                  
+             |#      \\                 
+              @@@@@@@@/                 
+              @@@@@@@@/            /\   
+             __@@@@@@__           /@/
+          *@@@@@@@@@@@@@(        /@/  
+       .%@@@@@@@@@@@@@@@@&,  [&@@@/     
+      .@@@  @@@@@@@@@@@  *&@(%@@@]      ";
 
             Scene encounter2 = new Scene();
             encounter2.SceneID = 2;
             encounter2.SceneDescription = "Mighty orc charges at you!";
-            //encounter2.SceneArt = "";
+            encounter2.SceneArt = @" .%        #,                           
+&&/@*    ,@/&&                          
+@  *##@@##*  @  &\   /####\   /&       
+ @&,  @@  ,&@   \%@@/______\@@%/        
+  \   @@   /       |  *  *  |           
+     .@@.        (%@%%%%%%%%@&#,        
+     %. .#    @%    @@@@@@@@    %@@     
+      @@%  .&@                     ,@/  
+      &@.@*     ,*            *%.   *&, 
+         .#%.   */              %.   (* 
+             ((##               %.   (* 
+              *@%_@@@@@_______#&.   *&, 
+            .&   @@@@@@@      /@*..@/\
+           #,     @@@@@         |. /@/
+           #,%@@@@@@@@@@@@&     |./@/  
+           #@@@@@@@@@@@@@@@@\.[&@@@/    
+          /@@  @@@@@@@@@@  *&@(%@@@]     ";
 
             Scene youDied = new Scene();
             youDied.SceneID = 3;
             youDied.SceneDescription = "You have died!";
-            //youDied.SceneArt = "";
+            youDied.SceneArt = "";
 
             scenes.Add(storyScene);
             scenes.Add(encounter1);
